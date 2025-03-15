@@ -1,11 +1,15 @@
 const express = require('express');
+const quizRoutes = require('./src/routes/quizRoutes');
+require('dotenv').config();
+
 const app = express();
-const port = 3005;
+const PORT = 4000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.use('/api/quiz', quizRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
+process.removeAllListeners('warning');
