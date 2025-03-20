@@ -1,11 +1,16 @@
-require('dotenv').config();
-const { OpenAI } = require('openai');
+import dotenv from 'dotenv';
+import { OpenAI } from 'openai';
+
+dotenv.config();
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-async function generateQuizAndFlashcards(text, numQuestions = 5) {
+export default async function generateQuizAndFlashcards(
+  text,
+  numQuestions = 5
+) {
   const prompt = `
     Based on the following text, generate:
 
@@ -48,7 +53,3 @@ async function generateQuizAndFlashcards(text, numQuestions = 5) {
 
   return JSON.parse(response.choices[0].message.content);
 }
-
-module.exports = {
-  generateQuizAndFlashcards,
-};
