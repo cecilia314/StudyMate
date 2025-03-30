@@ -9,6 +9,11 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           headerTitle: 'Study Mate',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            height: 100,
+          },
+
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? 'home-sharp' : 'home-outline'}
@@ -21,8 +26,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="quizzes"
         options={{
-          //   headerShown: false,
-          title: 'Quizzes',
+          headerTitle: 'Quizzes',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            height: 100,
+          },
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? 'book-sharp' : 'book-outline'}

@@ -1,16 +1,35 @@
-import { Text, View } from 'react-native';
-import { Link } from 'expo-router';
+import { View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
 
 export default function AddQuiz() {
+  const router = useRouter();
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
+        gap: 16,
+        paddingTop: 24,
         alignItems: 'center',
       }}
     >
-      <Text>Add a new quiz</Text>
+      <Button
+        onPress={() => {
+          router.back();
+        }}
+      >
+        <Text>Go to Home</Text>
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={() => {
+          router.navigate('/quizzes');
+        }}
+      >
+        <Text>All Quizzes</Text>
+      </Button>
     </View>
   );
 }

@@ -1,17 +1,36 @@
 import { View } from 'react-native';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
 
 export default function Index() {
+  const router = useRouter();
+
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
+        gap: 16,
+        paddingTop: 24,
         alignItems: 'center',
       }}
     >
-      <Link href={'/(zShared)/addQuiz'}> Add a quiz now!</Link>
-      <Link href={'/quizzes'}>Check out all the quizzes</Link>
+      <Button
+        onPress={() => {
+          router.navigate('/(zShared)/addQuiz');
+        }}
+      >
+        <Text>Add a new Quiz!</Text>
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={() => {
+          router.navigate('/quizzes');
+        }}
+      >
+        <Text>All Quizzes</Text>
+      </Button>
     </View>
   );
 }
