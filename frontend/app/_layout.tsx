@@ -2,6 +2,9 @@ import '../global.css';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from '@/src/apolloClient';
+
 import {
   useColorScheme,
   useInitialAndroidBarSync,
@@ -17,7 +20,7 @@ export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   return (
-    <>
+    <ApolloProvider client={client}>
       <StatusBar
         key={`root-status-bar-${isDarkColorScheme ? 'light' : 'dark'}`}
         style={isDarkColorScheme ? 'light' : 'dark'}
@@ -30,6 +33,6 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
         </Stack>
       </NavThemeProvider>
-    </>
+    </ApolloProvider>
   );
 }

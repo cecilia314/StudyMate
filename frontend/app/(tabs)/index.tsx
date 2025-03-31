@@ -1,36 +1,20 @@
-import { View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Button } from '@/components/nativewindui/Button';
-import { Text } from '@/components/nativewindui/Text';
+import { useQuery } from '@apollo/client';
+import { GET_QUIZZES } from '@/src/graphql/queries';
+import { useEffect } from 'react';
+import HomeScreen from '@/components/screens/HomeScreen';
 
 export default function Index() {
   const router = useRouter();
+  const { loading, error, data } = useQuery(GET_QUIZZES, {
+    variables: { amount: 4 },
+  });
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        gap: 16,
-        paddingTop: 24,
-        alignItems: 'center',
-      }}
-    >
-      <Button
-        onPress={() => {
-          router.navigate('/(zShared)/addQuiz');
-        }}
-      >
-        <Text>Add a new Quiz!</Text>
-      </Button>
+  useEffect(() => {
+    if (loading) console.log('loading quizzes ....');
+    if (error) console.log('Error: ', error.message);
+    if (data) console.log('AMAZING!: ', data);
+  }, [loading, error, data]);
 
-      <Button
-        variant="secondary"
-        onPress={() => {
-          router.navigate('/quizzes');
-        }}
-      >
-        <Text>All Quizzes</Text>
-      </Button>
-    </View>
-  );
+  return <HomeScreen />;
 }
