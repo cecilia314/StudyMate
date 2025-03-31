@@ -156,8 +156,6 @@ const Button = React.forwardRef<
     ref
   ) => {
     const { colorScheme } = useColorScheme();
-    const backgroundColor =
-      colorScheme === 'dark' ? COLORS.dark.primary : COLORS.light.primary;
 
     return (
       <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
@@ -174,7 +172,8 @@ const Button = React.forwardRef<
             className={cn(
               colorScheme === 'dark' ? 'bg-primary-dark' : 'bg-primary-light',
               props.disabled && 'opacity-50',
-              buttonVariants({ variant, size, className })
+              buttonVariants({ variant, size, className }),
+              'justify-center w-full'
             )}
             ref={ref}
             style={style}
