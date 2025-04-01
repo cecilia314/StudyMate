@@ -32,8 +32,8 @@ export const GET_QUIZ_BY_ID = gql`
 `;
 
 export const CREATE_QUIZ = gql`
-  mutation CreateQuiz($file: Upload!, $_id: String!) {
-    createQuiz(file: $file, _id: $_id) {
+  mutation CreateQuiz($fileBase64: String!) {
+    createQuiz(fileBase64: $fileBase64) {
       _id
       title
       createdAt
