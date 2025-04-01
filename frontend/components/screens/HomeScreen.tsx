@@ -10,11 +10,15 @@ import { COLORS } from '@/theme/colors';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { loading, error, data } = useQuery(GET_QUIZZES, {
+  const { loading, error, data, refetch } = useQuery(GET_QUIZZES, {
     variables: { amount: 4 },
   });
 
-  if (loading) return <Text className="text-base">Cargando quizzes...</Text>;
+  const handleQuizDeleted = () => {
+    refetch();
+  };
+
+  if (loading) return <Text className="text-base">Loading quizzes...</Text>;
   if (error) return <Text className="text-base">Error: {error.message}</Text>;
 
   const total = data?.getQuizzes?.totalCount ?? 0;
@@ -32,17 +36,15 @@ export default function HomeScreen() {
           <MaterialIcons name="add" size={24} color={COLORS.white} />
           <Text className="text-white">Add a new Quiz!</Text>
         </Button>
-        {total >= 2 ? (
+        {total >= 10 && (
           <Text className="text-popover-foreground web:text-slate-400 px-4 py-1">
             *You've reached the maximum number of quizzes. Delete one to create
             a new one.
           </Text>
-        ) : (
-          ''
         )}
       </View>
       {quizzes !== 'null' ? (
-        <Quizzes quizzes={quizzes} />
+        <Quizzes quizzes={quizzes} onQuizDeleted={handleQuizDeleted} />
       ) : (
         <Text> Start by uploading a new file</Text>
       )}

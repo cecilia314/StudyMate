@@ -39,6 +39,14 @@ export default function SharedLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="quiz"
+        options={{
+          title: 'Quiz',
+          headerTitle: 'Quiz',
+          headerTitleAlign: 'center',
+        }}
+      />
     </Stack>
   );
 }
