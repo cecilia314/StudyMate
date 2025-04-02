@@ -19,28 +19,26 @@ export default function Card({
   return (
     <Pressable
       onPress={onPress}
-      className="bg-slate-50 rounded-xl shadow-md p-4 w-full h-52"
+      className="bg-slate-50 dark:bg-gray-800 rounded-xl shadow-md p-4 w-full h-52"
       accessibilityRole="button"
       accessible={true}
     >
       <View className="flex flex-col gap-2 justify-evenly h-full">
         {/* Title */}
-        <Text className="text-black text-lg web:text-2xl line-clamp-2">
+        <Text className="text-black dark:text-white text-lg web:text-2xl line-clamp-2">
           {title}
         </Text>
 
         {/* Date */}
-        <Text className="text-black">Created on: {date}</Text>
+        <Text className="text-black dark:text-slate-300">
+          Created on: {date}
+        </Text>
 
         <View className="self-end w-full web:w-1/2">
           <Button variant="secondary" onPress={onButtonClick}>
-            <MaterialIcons
-              name="delete"
-              size={24}
-              color={COLORS.light.primary}
-            />
+            <MaterialIcons name="delete" size={24} color={COLORS.white} />
             {Platform.OS === 'web' && (
-              <Text className="text-base text-primary-light">Delete</Text>
+              <Text className="text-base text-white">Delete</Text>
             )}
           </Button>
         </View>

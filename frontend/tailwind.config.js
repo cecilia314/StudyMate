@@ -13,7 +13,6 @@ module.exports = {
         ring: withOpacity('ring'),
         background: withOpacity('background'),
         foreground: withOpacity('foreground'),
-        'primary-light': 'rgb(34, 140, 219)',
         primary: {
           DEFAULT: withOpacity('primary'),
           foreground: withOpacity('primary-foreground'),

@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import { View, Text, Platform, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Platform,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 import { CREATE_QUIZ } from '@/src/graphql/queries';
 import { Button } from '@/components/nativewindui/Button';
 
@@ -13,8 +19,26 @@ export default function AddQuizScreen() {
     useState<DocumentPicker.DocumentPickerResult | null>(null);
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
 
+  const client = useApolloClient();
+
   const [createQuiz, { loading, error }] = useMutation(CREATE_QUIZ, {
-    onCompleted: () => {
+    onCompleted: (data) => {
+      const newQuiz = data?.createQuiz;
+      if (newQuiz) {
+        client.cache.modify({
+          id: client.cache.identify({ __typename: 'Query' }),
+          fields: {
+            getQuizzes(existingData = {}) {
+              if (!existingData?.quizzes) return existingData;
+              return {
+                ...existingData,
+                quizzes: [newQuiz, ...existingData.quizzes],
+                totalCount: (existingData.totalCount ?? 0) + 1,
+              };
+            },
+          },
+        });
+      }
       router.navigate('/quizzes');
     },
     onError: (err) => {
@@ -77,7 +101,6 @@ export default function AddQuizScreen() {
 
   const handleSubmit = async () => {
     if (!pdfBase64) return;
-
     console.log('Sending file ...');
 
     await createQuiz({
@@ -86,7 +109,7 @@ export default function AddQuizScreen() {
   };
 
   return (
-    <View className="flex-1 p-4 mx-6 web:m-auto">
+    <View className="main flex-1 mx-8 web:mx-auto pt-6">
       <TouchableOpacity
         onPress={handleFilePick}
         className="border border-gray-300 p-4 rounded-md items-center mb-4"
@@ -99,11 +122,19 @@ export default function AddQuizScreen() {
       <Button onPress={handleSubmit} disabled={!pdfFile}>
         <Text className="text-white w-full text-center">Submit PDF</Text>
       </Button>
+
       {error && <Text className="text-destructive mt-2">{error.message}</Text>}
 
-      <View className="flex-1 justify-end self-end gap-4 mb-14">
+      {loading && (
+        <View className="spinner pt-11">
+          <ActivityIndicator size="large" />
+        </View>
+      )}
+      <View className="flex-1 justify-end self-center gap-4 mb-14">
         <Button variant="secondary" onPress={() => router.back()}>
-          <Text className="text-primary-light w-full text-center">To Home</Text>
+          <Text className="text-primary web:dark:text-white w-full text-center">
+            To Home
+          </Text>
         </Button>
 
         <Button onPress={() => router.navigate('/quizzes')}>

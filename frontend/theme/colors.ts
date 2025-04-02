@@ -30,7 +30,7 @@ const IOS_SYSTEM_COLORS = {
     root: 'rgb(0, 0, 0)',
     card: 'rgb(21, 21, 24)',
     destructive: 'rgb(254, 67, 54)',
-    primary: 'rgb(227, 151, 116)',
+    primary: 'rgb(0, 99, 93)',
     secondary: 'rgb(34, 140, 219)',
   },
 } as const;
@@ -65,7 +65,7 @@ const ANDROID_COLORS = {
     root: 'rgb(0, 0, 0)',
     card: 'rgb(16, 19, 27)',
     destructive: 'rgb(147, 0, 10)',
-    primary: 'rgb(227, 151, 116)',
+    primary: 'rgb(0, 99, 93)',
     secondary: 'rgb(34, 140, 219)',
   },
 } as const;

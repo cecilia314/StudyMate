@@ -8,8 +8,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-
-import { TextClassContext } from '@/components/nativewindui/Text';
 import { cn } from '@/lib/cn';
 import { useColorScheme } from '@/lib/useColorScheme';
 import { COLORS } from '@/theme/colors';
@@ -17,9 +15,10 @@ import { COLORS } from '@/theme/colors';
 const buttonVariants = cva('flex-row items-center justify-centaer gap-2', {
   variants: {
     variant: {
-      primary: 'ios:active:opacity-80 bg-primary-light',
+      primary:
+        'ios:active:opacity-80 bg-primary web:bg-slate-100 web:dark:bg-[#00635D]',
       secondary:
-        'ios:border-primary ios:active:bg-primary/5 bg-white border border-primary-light rounded-lg web:border-none',
+        'ios:border-primary ios:active:bg-primary/5  border border-primary web:dark:border-white',
 
       tonal:
         'ios:bg-primary/10 dark:ios:bg-primary/10 ios:active:bg-primary/15 bg-primary/15 dark:bg-primary/30',
@@ -45,7 +44,7 @@ const androidRootVariants = cva('overflow-hidden', {
       none: '',
       icon: 'rounded-full',
       sm: 'rounded-full',
-      md: 'rounded-full',
+      md: 'rounded-lg',
       lg: 'rounded-xl',
     },
   },
@@ -57,8 +56,8 @@ const androidRootVariants = cva('overflow-hidden', {
 const buttonTextVariants = cva('font-medium', {
   variants: {
     variant: {
-      primary: 'text-white web:text-white',
-      secondary: 'text-primary-light',
+      primary: 'text-foreground ',
+      secondary: 'text-primary',
       tonal: 'ios:text-primary text-foreground',
       plain: 'text-foreground',
     },
@@ -158,30 +157,29 @@ const Button = React.forwardRef<
     const { colorScheme } = useColorScheme();
 
     return (
-      <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
-        <Root
-          className={Platform.select({
-            ios: undefined,
-            default: androidRootVariants({
-              size,
-              className: androidRootClassName,
-            }),
-          })}
-        >
-          <Pressable
-            className={cn(
-              colorScheme === 'dark' ? 'bg-primary-dark' : 'bg-primary-light',
-              props.disabled && 'opacity-50',
-              buttonVariants({ variant, size, className }),
-              'justify-center w-full'
-            )}
-            ref={ref}
-            style={style}
-            android_ripple={ANDROID_RIPPLE[colorScheme][variant]}
-            {...props}
-          />
-        </Root>
-      </TextClassContext.Provider>
+      <Root
+        className={Platform.select({
+          ios: undefined,
+          default: androidRootVariants({
+            size,
+            className: androidRootClassName,
+          }),
+        })}
+      >
+        <Pressable
+          className={cn(
+            colorScheme === 'dark' ? 'bg-primary-dark' : 'bg-primary-light',
+            props.disabled && 'opacity-50',
+            buttonVariants({ variant, size, className }),
+            'justify-center',
+            'border-inherit'
+          )}
+          ref={ref}
+          style={style}
+          android_ripple={ANDROID_RIPPLE[colorScheme][variant]}
+          {...props}
+        />
+      </Root>
     );
   }
 );

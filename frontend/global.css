@@ -47,13 +47,13 @@
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: 0 0 0;
+      --background: 17 11 28;
       --foreground: 255 255 255;
       --card: 21 21 24;
       --card-foreground: 255 255 255;
       --popover: 40 40 42;
       --popover-foreground: 255 255 255;
-      --primary: 227 151 116;
+      --primary: 0 99 93;
       --primary-foreground: 255 255 255;
       --secondary: 34 140 219;
       --secondary-foreground: 255 255 255;
@@ -67,13 +67,13 @@
       --input: 55 55 57;
       --ring: 40 40 42;
 
-      --android-background: 0 0 0;
+      --android-background: 17 11 28;
       --android-foreground: 255 255 255;
       --android-card: 16 19 27;
       --android-card-foreground: 224 226 237;
       --android-popover: 39 42 50;
       --android-popover-foreground: 224 226 237;
-      --android-primary: 227 151 219;
+      --android-primary: 0 99 93;
       --android-primary-foreground: 255 255 255;
       --android-secondary: 227 151 116;
       --android-secondary-foreground: 189 209 255;

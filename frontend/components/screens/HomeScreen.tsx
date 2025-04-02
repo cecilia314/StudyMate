@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Button } from '../nativewindui/Button';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 import { GET_QUIZZES } from '@/src/graphql/queries';
 import Quizzes from '../lists/Quizzes';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,22 +10,37 @@ import { COLORS } from '@/theme/colors';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { loading, error, data, refetch } = useQuery(GET_QUIZZES, {
+  const { loading, error, data } = useQuery(GET_QUIZZES, {
     variables: { amount: 4 },
   });
 
-  const handleQuizDeleted = () => {
-    refetch();
+  const client = useApolloClient();
+  const handleQuizDeleted = (id: string) => {
+    client.cache.modify({
+      id: client.cache.identify({ __typename: 'Query' }),
+      fields: {
+        getQuizzes(existingData = {}, { readField }) {
+          if (!existingData?.quizzes) return existingData;
+          return {
+            ...existingData,
+            quizzes: existingData.quizzes.filter(
+              (quiz: { _id: string }) => readField('_id', quiz) !== id
+            ),
+            totalCount: Math.max(existingData.totalCount - 1, 0),
+          };
+        },
+      },
+    });
+    client.refetchQueries({ include: [GET_QUIZZES] });
   };
 
-  if (loading) return <Text className="text-base">Loading quizzes...</Text>;
-  if (error) return <Text className="text-base">Error: {error.message}</Text>;
+  if (error) return console.log('Error: ', error.message);
 
   const total = data?.getQuizzes?.totalCount ?? 0;
   const quizzes = data?.getQuizzes?.quizzes ?? [];
 
   return (
-    <View className="grid mx-auto pt-6">
+    <View className="main flex-1 mx-2 web:mx-auto pt-6">
       <View className="px-4">
         <Button
           onPress={() => {
@@ -34,7 +49,8 @@ export default function HomeScreen() {
           disabled={total >= 10}
         >
           <MaterialIcons name="add" size={24} color={COLORS.white} />
-          <Text className="text-white">Add a new Quiz!</Text>
+
+          <Text className="text-white ">Add a new Quiz!</Text>
         </Button>
         {total >= 10 && (
           <Text className="text-popover-foreground web:text-slate-400 px-4 py-1">
@@ -43,10 +59,12 @@ export default function HomeScreen() {
           </Text>
         )}
       </View>
-      {quizzes !== 'null' ? (
-        <Quizzes quizzes={quizzes} onQuizDeleted={handleQuizDeleted} />
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : quizzes?.length ? (
+        <Quizzes quizzes={quizzes} onCachedQuizDeleted={handleQuizDeleted} />
       ) : (
-        <Text> Start by uploading a new file</Text>
+        <Text>Start by uploading a new file</Text>
       )}
     </View>
   );
