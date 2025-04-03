@@ -51,7 +51,7 @@ const ANDROID_COLORS = {
     card: 'rgb(255, 255, 255)',
     destructive: 'rgb(186, 26, 26)',
     primary: 'rgb(34, 140, 219)',
-    secondary: 'rgb(227, 151, 116)',
+    secondary: 'rgb(244, 151, 107)',
   },
   dark: {
     grey6: 'rgb(16, 19, 27)',

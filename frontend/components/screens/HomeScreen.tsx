@@ -13,6 +13,7 @@ export default function HomeScreen() {
   const { loading, error, data } = useQuery(GET_QUIZZES, {
     variables: { amount: 4 },
   });
+  if (error) return console.log('Error: ', error.message);
 
   const client = useApolloClient();
   const handleQuizDeleted = (id: string) => {
@@ -33,8 +34,6 @@ export default function HomeScreen() {
     });
     client.refetchQueries({ include: [GET_QUIZZES] });
   };
-
-  if (error) return console.log('Error: ', error.message);
 
   const total = data?.getQuizzes?.totalCount ?? 0;
   const quizzes = data?.getQuizzes?.quizzes ?? [];
