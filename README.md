@@ -77,13 +77,13 @@ This project is built with:
 - **NativeWind (TailwindCSS for styling)**
 - **GraphQL Client (Apollo)**
 
-| Screens     |                                    iOS                                     |                              Android (dark mode)                               |                                     Web                                     |
-| ----------- | :------------------------------------------------------------------------: | :----------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | -------------------------------------------------------------------------- |
-| Home        |  <img src="frontend/assets/images/screenshots/iOS-home.PNG" width="200"/>  |  <img src="frontend/assets/images/screenshots/android-web.jpg" width="200"/>   |  <img src="frontend/assets/images/screenshots/web-home.png" width="200"/>   |
-| Create Quiz |  <img src="frontend/assets/images/screenshots/iOS-add.PNG" width="200"/>   |  <img src="frontend/assets/images/screenshots/android-add.jpg" width="200"/>   | <img src="frontend/assets/images/screenshots/android-web.jpg" width="200"/> | <img src="frontend/assets/images/screenshots/web-add.png" width="200"/>    |
-| All Quizzes |  <img src="frontend/assets/images/screenshots/iOS-all.PNG" width="200"/>   |  <img src="frontend/assets/images/screenshots/android-all.jpg" width="200"/>   | <img src="frontend/assets/images/screenshots/android-web.jpg" width="200"/> | <img src="frontend/assets/images/screenshots/web-all.png" width="200"/>    |
-| Quiz        | <img src="frontend/assets/images/screenshots/iOS-quiz-1.PNG" width="200"/> | <img src="frontend/assets/images/screenshots/android-quiz-1.jpg" width="200"/> | <img src="frontend/assets/images/screenshots/android-web.jpg" width="200"/> | <img src="frontend/assets/images/screenshots/web-quiz-1.png" width="200"/> |
-|             | <img src="frontend/assets/images/screenshots/iOS-quiz-2.PNG" width="200"/> | <img src="frontend/assets/images/screenshots/android-quiz-2.jpg" width="200"/> |                                                                             |
+| Screens     |        iOS                  |          Android (dark mode)            |                 Web                               |
+| ----------- | :-------------------------: | :-------------------------------------: | :-----------------------------------------------: | 
+| Home        |  <img src="frontend/assets/images/screenshots/iOS-home.PNG" width="150"/>  |  <img src="frontend/assets/images/screenshots/android-web.jpg" width="150"/>   |  <img src="frontend/assets/images/screenshots/web-home.png" width="150"/>   |
+| Create Quiz |  <img src="frontend/assets/images/screenshots/iOS-add.PNG" width="150"/>   |  <img src="frontend/assets/images/screenshots/android-add.jpg" width="150"/>   | <img src="frontend/assets/images/screenshots/web-add.png" width="150"/>    |
+| All Quizzes |  <img src="frontend/assets/images/screenshots/iOS-all.PNG" width="150"/>   |  <img src="frontend/assets/images/screenshots/android-all.jpg" width="150"/>   | <img src="frontend/assets/images/screenshots/web-all.png" width="150"/>    |
+| Quiz        | <img src="frontend/assets/images/screenshots/iOS-quiz-1.PNG" width="150"/> | <img src="frontend/assets/images/screenshots/android-quiz-1.jpg" width="150"/> | <img src="frontend/assets/images/screenshots/web-quiz-1.png" width="150"/> |
+|             | <img src="frontend/assets/images/screenshots/iOS-quiz-2.PNG" width="150"/> | <img src="frontend/assets/images/screenshots/android-quiz-2.jpg" width="150"/> |                                                                             |
 
 ---
 
