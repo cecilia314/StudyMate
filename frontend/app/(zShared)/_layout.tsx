@@ -1,10 +1,5 @@
 import { Stack, useRouter, useNavigation } from 'expo-router';
-import {
-  useColorScheme,
-  TouchableOpacity,
-  Pressable,
-  View,
-} from 'react-native';
+import { useColorScheme, Pressable, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function SharedLayout() {
@@ -37,6 +32,13 @@ export default function SharedLayout() {
               </Pressable>
             </View>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="quiz/[id]"
+        options={{
+          title: 'Quiz',
+          headerShown: false,
         }}
       />
     </Stack>

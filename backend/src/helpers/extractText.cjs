@@ -1,20 +1,17 @@
 const pdfParse = require('pdf-parse');
 
-const extractTextFromPDF = async (pdfBuffer) => {
+const extractText = async (pdfBuffer) => {
   try {
     const data = await pdfParse(pdfBuffer);
-
     if (data.numpages > 0) {
-      const text = data.text;
-
-      const cleanedText = text
+      const cleanedText = data.text
         .split('\n')
         .filter((line) => line.trim() !== '')
         .join('\n');
 
       return cleanedText;
     } else {
-      throw new Error('The PDF appears to be empty or corrupted');
+      throw new Error('PDF file is empty or damaged');
     }
   } catch (error) {
     console.error('Error processing PDF:', error);
@@ -23,5 +20,5 @@ const extractTextFromPDF = async (pdfBuffer) => {
 };
 
 module.exports = {
-  extractTextFromPDF,
+  extractText,
 };

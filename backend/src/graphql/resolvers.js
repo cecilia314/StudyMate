@@ -1,74 +1,52 @@
-import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 import generateQuiz from '../services/openaiService.js';
 import Quiz from '../models/QuizModel.js';
-import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 // pdf-parse package causes an error when using import/from with ESM.
-// To avoid compatibility issues, I use dynamic import() to load the CommonJS module.
-let extractTextFromPDF;
-async function loadExtractTextFromPDF() {
-  const module = await import('../helpers/extractTextFromPDF.cjs');
-  extractTextFromPDF = module.extractTextFromPDF;
+// To avoid this compatibility issue, I use dynamic import() to load the CommonJS module.
+let extractText;
+async function loadExtractText() {
+  const module = await import('../helpers/extractText.cjs');
+  extractText = module.extractText;
 }
-await loadExtractTextFromPDF();
+await loadExtractText();
 
 const resolvers = {
-  Upload: GraphQLUpload,
-
   Query: {
     async quiz(_, { _id }) {
       return await Quiz.findById(_id);
     },
     async getQuizzes(_, { amount }) {
-      return await Quiz.find().sort({ createdAt: -1 }).limit(amount);
+      const quizzes = await Quiz.find().sort({ createdAt: -1 }).limit(amount);
+      const totalCount = await Quiz.countDocuments();
+
+      return { quizzes, totalCount };
     },
   },
 
   Mutation: {
-    async createQuiz(_, { file, _id }) {
+    async createQuiz(_, { fileBase64 }) {
       try {
-        const { createReadStream, filename } = await file;
-
-        if (!filename.endsWith('.pdf')) {
-          throw new Error('The file must have a .pdf extension.');
+        if (!fileBase64.startsWith('data:application/pdf;base64,')) {
+          throw new Error('Invalid format, only PDFs in Base64.');
         }
 
-        const filePath = `./uploads/${filename}`;
+        // To Buffer
+        const base64Data = fileBase64.replace(
+          'data:application/pdf;base64,',
+          ''
+        );
+        const pdfBuffer = Buffer.from(base64Data, 'base64');
 
-        // Save the file on the server
-        const stream = createReadStream();
-        const out = fs.createWriteStream(filePath);
-        stream.pipe(out);
+        const text = await extractText(pdfBuffer);
 
-        await new Promise((resolve, reject) => {
-          out.on('finish', resolve);
-          out.on('error', reject);
-        });
+        const quizData = await generateQuiz(text);
+        const newQuiz = { ...quizData, _id: uuidv4() };
 
-        const stats = fs.statSync(filePath);
-        if (stats.size > 5 * 1024 * 1024) {
-          fs.unlinkSync(filePath);
-          throw new Error('The file cannot be larger than 5MB');
-        }
+        const savedQuiz = new Quiz(newQuiz);
+        await savedQuiz.save();
 
-        try {
-          const pdfBuffer = fs.readFileSync(filePath);
-          const text = await extractTextFromPDF(pdfBuffer);
-
-          let quizData = await generateQuiz(text);
-
-          quizData = { ...quizData, _id: _id };
-
-          const savedQuiz = new Quiz(quizData);
-          await savedQuiz.save();
-
-          fs.unlinkSync(filePath);
-
-          return savedQuiz;
-        } catch (error) {
-          fs.unlinkSync(filePath);
-          throw new Error('Error processing PDF', error.message);
-        }
+        return savedQuiz;
       } catch (error) {
         console.error('Error in createQuiz:', error);
         throw new Error(error.message);

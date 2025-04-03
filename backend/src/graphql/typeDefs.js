@@ -1,5 +1,4 @@
 const typeDefs = `
-  scalar Upload
   type Quiz {
     _id: String
     title: String!
@@ -16,15 +15,21 @@ const typeDefs = `
     definition: String!
   }
 
+  type QuizzesResult {
+    quizzes: [Quiz]
+    totalCount: Int
+  }
+
   type Query {
     quiz(_id: String!): Quiz!
-    getQuizzes(amount: Int): [Quiz]
+    getQuizzes(amount: Int): QuizzesResult
   }
 
   type Mutation {
-    createQuiz(file: Upload!, _id: String!): Quiz!
+    createQuiz(fileBase64: String!): Quiz!
     deleteQuiz(_id: String!): Boolean
     editQuizTitle(_id: String!, title: String!): Quiz!
   }
 `;
+
 export { typeDefs };
