@@ -52,7 +52,7 @@ export const AnimatedCard = ({ question, answer }: CardProps) => {
   };
 
   return (
-    <View className="flex-1 w-full web:w-96 justify-center items-center mt-5">
+    <View className="flex-1 w-full web:w-96 justify-center items-center">
       <TouchableWithoutFeedback onPress={flipCard}>
         <View className="w-3/4 h-1/2">
           <Animated.View

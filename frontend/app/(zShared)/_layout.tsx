@@ -38,8 +38,7 @@ export default function SharedLayout() {
         name="quiz/[id]"
         options={{
           title: 'Quiz',
-          headerTitle: 'Quiz',
-          headerTitleAlign: 'center',
+          headerShown: false,
         }}
       />
     </Stack>

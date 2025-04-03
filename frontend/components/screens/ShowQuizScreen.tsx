@@ -29,8 +29,8 @@ export default function ShowQuizScreen() {
   const quiz = data?.quiz?.questions ?? [];
 
   return (
-    <View className="main flex-1 mx-2 mb-36 web:mx-auto pt-6">
-      <Text className="w-full text-xl capitalize text-center text-black dark:text-white">
+    <View className="main flex-1 mx-2 mt-14 mb-24 web:mx-auto">
+      <Text className="w-full text-xl web:text-3xl capitalize text-center text-black dark:text-white">
         {data?.quiz?.title}
       </Text>
       <QuizCarousel quiz={quiz} />

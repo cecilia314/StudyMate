@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
-const SERVER_URI = 'http://XX.X.X.XXX:4000/graphql'; // ADD YOUR LOCAL IP ADDRESS
+const SERVER_URI = 'http://10.0.0.237:4000/graphql'; // ADD YOUR LOCAL IP ADDRESS
 const str = /[X]/;
 
 if (SERVER_URI.search(str) !== -1) {

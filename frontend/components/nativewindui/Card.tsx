@@ -24,12 +24,10 @@ export default function Card({
       accessible={true}
     >
       <View className="flex flex-col gap-2 justify-evenly h-full">
-        {/* Title */}
         <Text className="text-black capitalize dark:text-white text-lg web:text-2xl web:dark:text-black line-clamp-2">
           {title}
         </Text>
 
-        {/* Date */}
         <Text className="text-black dark:text-slate-300 web:dark:text-black">
           Created on: {date}
         </Text>

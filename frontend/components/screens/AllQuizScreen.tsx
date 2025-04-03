@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { useQuery, useApolloClient } from '@apollo/client';
 import { GET_QUIZZES } from '@/src/graphql/queries';
 import Quizzes from '../lists/Quizzes';
@@ -10,6 +10,7 @@ export default function AllQuizScreen() {
   });
 
   const client = useApolloClient();
+
   const handleQuizDeleted = (id: string) => {
     client.cache.modify({
       id: client.cache.identify({ __typename: 'Query' }),
@@ -29,13 +30,25 @@ export default function AllQuizScreen() {
     client.refetchQueries({ include: [GET_QUIZZES] });
   };
 
-  if (loading) return <Text className="text-base">Loading quizzes...</Text>;
-  if (error) return <Text className="text-base">Error: {error.message}</Text>;
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  if (error) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-red-500">Error: {error.message}</Text>
+      </View>
+    );
+  }
 
   const quizzes = data?.getQuizzes?.quizzes ?? [];
 
   return (
-    <View className="main flex-1 mx-2 web:mx-auto pt-6">
+    <View className="main flex-1 mx-2 web:mx-auto">
       {quizzes.length > 0 ? (
         <Quizzes quizzes={quizzes} onCachedQuizDeleted={handleQuizDeleted} />
       ) : (

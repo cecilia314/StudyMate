@@ -10,12 +10,28 @@ import { COLORS } from '@/theme/colors';
 
 export default function HomeScreen() {
   const router = useRouter();
+
   const { loading, error, data } = useQuery(GET_QUIZZES, {
     variables: { amount: 4 },
   });
-  if (error) return console.log('Error: ', error.message);
 
   const client = useApolloClient();
+
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  if (error) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-red-500">Error: {error.message}</Text>
+      </View>
+    );
+  }
+
   const handleQuizDeleted = (id: string) => {
     client.cache.modify({
       id: client.cache.identify({ __typename: 'Query' }),
@@ -58,12 +74,10 @@ export default function HomeScreen() {
           </Text>
         )}
       </View>
-      {loading ? (
-        <ActivityIndicator size="large" />
-      ) : quizzes?.length ? (
+      {quizzes.length > 0 ? (
         <Quizzes quizzes={quizzes} onCachedQuizDeleted={handleQuizDeleted} />
       ) : (
-        <Text>Start by uploading a new file</Text>
+        <Text>Start by uploading a new file.</Text>
       )}
     </View>
   );

@@ -15,10 +15,9 @@ import { COLORS } from '@/theme/colors';
 const buttonVariants = cva('flex-row items-center justify-centaer gap-2', {
   variants: {
     variant: {
-      primary:
-        'ios:active:opacity-80 bg-primary web:bg-slate-100 web:dark:bg-[#00635D]',
+      primary: 'ios:active:opacity-80 bg-primary web:bg-[#1d7bc2]',
       secondary:
-        'ios:border-primary ios:active:bg-primary/5  border border-primary web:dark:border-white',
+        'ios:border-primary ios:active:bg-primary/5 border android:border-border web:border-[#1d7bc2]',
 
       tonal:
         'ios:bg-primary/10 dark:ios:bg-primary/10 ios:active:bg-primary/15 bg-primary/15 dark:bg-primary/30',

@@ -24,7 +24,7 @@ export const QuizCarousel = ({ quiz }: CarouselProps) => {
 
   return (
     <View className="flex-1">
-      <Text className="w-full text-center text-sm text-black dark:text-white my-4">
+      <Text className="w-full text-center text-sm text-black dark:text-white my-2">
         {quiz.length > 0
           ? `Question ${currentIndex + 1} of ${quiz.length}`
           : 'No questions available'}
@@ -40,7 +40,7 @@ export const QuizCarousel = ({ quiz }: CarouselProps) => {
 
       {/* Buttons */}
       {quiz.length > 1 && (
-        <View className="flex-row justify-between mb-16 mx-10">
+        <View className="flex-row justify-between mb-12 mx-10">
           <TouchableOpacity
             onPress={handlePrevious}
             className="w-24 px-4 py-2 rounded-md bg-primary web:bg-[#228CDB]"
