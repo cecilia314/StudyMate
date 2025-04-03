@@ -38,11 +38,13 @@ export default function HomeScreen() {
       fields: {
         getQuizzes(existingData = {}, { readField }) {
           if (!existingData?.quizzes) return existingData;
+
+          const filteredQuizzes = existingData.quizzes.filter(
+            (quiz: { _id: string }) => readField('_id', quiz) !== id
+          );
           return {
             ...existingData,
-            quizzes: existingData.quizzes.filter(
-              (quiz: { _id: string }) => readField('_id', quiz) !== id
-            ),
+            quizzes: filteredQuizzes.slice(0, 4),
             totalCount: Math.max(existingData.totalCount - 1, 0),
           };
         },

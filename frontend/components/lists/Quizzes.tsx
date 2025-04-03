@@ -13,13 +13,11 @@ interface Quiz {
 
 interface QuizzesProps {
   quizzes: Quiz[];
-  onQuizDeleted?: () => void;
   onCachedQuizDeleted?: (id: string) => void;
 }
 
 export default function Quizzes({
   quizzes: initialQuizzes,
-  onQuizDeleted,
   onCachedQuizDeleted,
 }: QuizzesProps) {
   const router = useRouter();
@@ -30,15 +28,29 @@ export default function Quizzes({
   }, [initialQuizzes]);
 
   const [deleteQuiz] = useMutation(DELETE_QUIZ, {
+    update(cache, { data: { deleteQuiz } }) {
+      cache.modify({
+        id: cache.identify({ __typename: 'Query' }),
+        fields: {
+          getQuizzes(existingData = {}, { readField }) {
+            if (!existingData?.quizzes) return existingData;
+            return {
+              ...existingData,
+              quizzes: existingData.quizzes.filter(
+                (quiz: { _id: string }) =>
+                  readField('_id', quiz) !== deleteQuiz._id
+              ),
+              totalCount: Math.max(existingData.totalCount - 1, 0),
+            };
+          },
+        },
+      });
+    },
     onCompleted: (response) => {
       const deletedQuizId = response?.deleteQuiz?._id;
-
-      if (onQuizDeleted) onQuizDeleted();
       if (onCachedQuizDeleted && deletedQuizId) {
         onCachedQuizDeleted(deletedQuizId);
       }
-
-      setQuizzes((prev) => prev.filter((q) => q._id !== deletedQuizId));
     },
   });
 
