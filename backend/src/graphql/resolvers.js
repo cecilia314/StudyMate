@@ -3,7 +3,7 @@ import Quiz from '../models/QuizModel.js';
 import { v4 as uuidv4 } from 'uuid';
 
 // pdf-parse package causes an error when using import/from with ESM.
-// To avoid this compatibility issue, I use dynamic import() to load the CommonJS module.
+// To avoid this compatibility issue, I asked chatGPT if I could use a dynamic import() to load the CommonJS module.
 let extractText;
 async function loadExtractText() {
   const module = await import('../helpers/extractText.cjs');
@@ -31,7 +31,6 @@ const resolvers = {
           throw new Error('Invalid format, only PDFs in Base64.');
         }
 
-        // To Buffer
         const base64Data = fileBase64.replace(
           'data:application/pdf;base64,',
           ''
