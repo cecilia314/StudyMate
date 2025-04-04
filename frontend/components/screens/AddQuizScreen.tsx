@@ -69,6 +69,8 @@ export default function AddQuizScreen() {
     }
   };
 
+  // I got an error on Web for trying to use DocumentPicker.
+  // I asked the chat if I could have a similar function to work on web
   const convertPdfToBase64Mobile = async (uri: string) => {
     try {
       const base64 = await FileSystem.readAsStringAsync(uri, {

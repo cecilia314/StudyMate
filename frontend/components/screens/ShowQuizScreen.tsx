@@ -1,8 +1,7 @@
 import { GET_QUIZ_BY_ID } from '@/src/graphql/queries';
 import { useQuery } from '@apollo/client';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { AnimatedCard } from '../nativewindui/AnimatedCard';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { QuizCarousel } from '../nativewindui/QuizCarousel';
 import { Button } from '../nativewindui/Button';
 

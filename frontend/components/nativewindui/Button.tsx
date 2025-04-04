@@ -12,7 +12,7 @@ import { cn } from '@/lib/cn';
 import { useColorScheme } from '@/lib/useColorScheme';
 import { COLORS } from '@/theme/colors';
 
-// Modified component form nativewindUI
+// Modified component from nativewindUI
 const buttonVariants = cva('flex-row items-center justify-centaer gap-2', {
   variants: {
     variant: {
